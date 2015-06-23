@@ -1,3 +1,4 @@
+INCLUDE (CheckLibraryExists)
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}")
 
@@ -13,8 +14,10 @@ set(LIBTIME_SOURCE
 )
 
 add_library(libmtime ${LIBTIME_SOURCE})
-if (ANDROID_TARGET)
-    target_link_libraries(libmtime)
-else (ANDROID_TARGET)
+
+CHECK_LIBRARY_EXISTS(rt clock_gettime "" HAVE_LIB_RT)
+if (HAVE_LIB_RT)
     target_link_libraries(libmtime rt)
-endif (ANDROID_TARGET)
+else (HAVE_LIB_RT)
+    target_link_libraries(libmtime)
+endif (HAVE_LIB_RT)
