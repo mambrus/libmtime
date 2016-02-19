@@ -22,9 +22,17 @@
 
 void __init __mtime_init(void)
 {
+#ifdef INITFINI_SHOW
+    fprintf(stderr, ">>> Running module _init in [" __FILE__ "]\n"
+            ">>> using CTORS/DTORS mechanism ====\n");
+#endif
     set_clocktype(KERNEL_CLOCK);
 }
 
 void __fini __mtime_fini(void)
 {
+#ifdef INITFINI_SHOW
+    fprintf(stderr, ">>> Running module _fini in [" __FILE__ "]\n"
+            ">>> using CTORS/DTORS mechanism ====\n");
+#endif
 }
